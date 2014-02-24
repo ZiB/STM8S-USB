@@ -1,0 +1,61 @@
+#==========================================================
+#   File:   Linker Script File
+#   Date:   2013-01-02
+#	Denis Zheleznyakov aka ZiB @ ZiBlog.ru
+#==========================================================
+
+# флеш-память: программный код, константы
++seg .const -b 0x8480 -m 0x1f80 -n .const -it   
++seg .text -a .const  -n .text
+
+# EEPROM
++seg .eeprom -b 0x4000 -m 0x80  -n .eeprom
+
+# ОЗУ: нулевая страница
++seg .bsct -b 0x0 -m 0x100  -n .bsct
++seg .ubsct -a .bsct  -n .ubsct
++seg .bit -a .ubsct  -n .bit -id
+#+seg .share -a .bit  -n .share -is
+
+# ОЗУ: 
++seg .data -b 0x100 -m 0x100  -n .data
++seg .in_ram -a .data -n .in_ram -ic
++seg .bss -a .in_ram  -n .bss
+
+#----------------------------------------------------------
+
+# начальная инициализация 
+crtsi0.sm8
+
+# исходники
+target/main.o
+target/usb.o
+target/macros.o
+target/stm8s_it.o
+target/stm8s_clk.o
+target/stm8s_tim1.o
+target/stm8s_tim2.o
+target/stm8s_tim4.o
+target/stm8s_uart1.o
+
+# библиотеки
+libis0.sm8
+libm0.sm8
+
+# таблица прерываний
++seg .const -b 0x8000 -k
+target/stm8_interrupt_vector.o
+
++seg .text -b 0x8080
+target/usb_tx.o
+
++seg .text -b 0x8280
+target/usb_rx.o
+
+# определения используются при начальной инициализации
++def __endzp=@.ubsct
++def __memory=@.bss
++def __startmem=@.bss
++def __endmem=0x1ff
++def __stack=0x3ff 
+
