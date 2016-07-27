@@ -240,7 +240,7 @@ _usb_tx:
 
 	ldw		x, _usb_tx_buffer_pointer
 
-	ld		a,#$80
+	ld		a,#$40
 	ld		20490,a
 
 	ld		a, #$06						; счет

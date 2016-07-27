@@ -151,7 +151,7 @@ void usb_send_nack(void)
 {
 	uint8_t data[2];
 
-	GPIOC->ODR = 0x80;
+	GPIOC->ODR = 0x40;
 	GPIOC->CR1 = 0xFF;
 	GPIOC->CR2 = 0xFF;
 	GPIOC->DDR = 0xFF;
@@ -180,7 +180,7 @@ void usb_send_ack(void)
 {
 	uint8_t data[2];
 
-	GPIOC->ODR = 0x80;
+	GPIOC->ODR = 0x40;
 	GPIOC->CR1 = 0xFF;
 	GPIOC->CR2 = 0xFF;
 	GPIOC->DDR = 0xFF;
@@ -209,7 +209,7 @@ uint8_t count = 0;
 
 @inline void usb_send_answer(void)
 {
-	GPIOC->ODR = 0x80;
+	GPIOC->ODR = 0x40;
 	GPIOC->CR1 = 0xFF;
 	GPIOC->CR2 = 0xFF;
 	GPIOC->DDR = 0xFF;
