@@ -161,14 +161,6 @@ L_Delay_Begin:
 	nop
 	nop
 	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
 
 L_Delay_End:
 
