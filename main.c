@@ -6,6 +6,8 @@
 
 #include "main.h"
 
+volatile uint32_t timer;
+
 @inline static void gpio_init(void)
 {
 	// перевод всех линий на вход с подтяжкой к плюсу
@@ -21,6 +23,12 @@
 	GPIOC->CR2 = 0;
 	GPIOC->DDR = 0x3F;
 	GPIOC->ODR = 0;
+	
+	// 1,5 kOm
+	GPIOA->DDR = 0x00;
+	GPIOA->ODR = 0x00;
+	GPIOA->CR1 = 0x00;
+	GPIOA->CR2 = 0x00;
 }
 
 @inline static void clock_init(void)
@@ -58,6 +66,18 @@ void main(void)
 	timers_init();
 
 	enableInterrupts();
+	
+	// delay
+	timer = 500000;
+	while(timer-- > 0)
+	{
+	}
+	
+	// 1,5 kOm
+	GPIOA->DDR = 0xff;
+	GPIOA->ODR = 0xff;
+	GPIOA->CR1 = 0xff;
+	GPIOA->CR2 = 0xff;
 
 	while(1)
 	{
