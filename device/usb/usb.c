@@ -231,14 +231,6 @@ uint8_t count = 0;
 	GPIOC->DDR = 0x3F;
 }
 
-@inline void usb_copy_rx_buffer(void)
-{
-	uint8_t index = 0;
-
-	for (index = 0; index < ARRAY_LENGHT(usb_rx_buffer); index++)
-		usb.rx_buffer[index] = usb_rx_buffer[index];
-}
-
 void usb_rx_ok(void)
 {
 	switch (usb_rx_buffer[1])
@@ -276,9 +268,24 @@ void usb_rx_ok(void)
 		{
 			if (usb.state == USB_STATE_SETUP)
 			{
+				usb.rx_buffer[0] = usb_rx_buffer[0];
+				usb.rx_buffer[1] = usb_rx_buffer[1];
+				usb.rx_buffer[2] = usb_rx_buffer[2];
+				usb.rx_buffer[3] = usb_rx_buffer[3];
+				usb.rx_buffer[4] = usb_rx_buffer[4];
+				usb.rx_buffer[5] = usb_rx_buffer[5];
+				usb.rx_buffer[6] = usb_rx_buffer[6];
+				usb.rx_buffer[7] = usb_rx_buffer[7];
+				usb.rx_buffer[8] = usb_rx_buffer[8];
+				usb.rx_buffer[9] = usb_rx_buffer[9];
+				usb.rx_buffer[10] = usb_rx_buffer[10];
+				usb.rx_buffer[11] = usb_rx_buffer[11];
+				usb.rx_buffer[12] = usb_rx_buffer[12];
+				usb.rx_buffer[13] = usb_rx_buffer[13];
+				usb.rx_buffer[14] = usb_rx_buffer[14];
+				usb.rx_buffer[15] = usb_rx_buffer[15];
+				
 				usb_send_ack();
-
-				usb_copy_rx_buffer();
 
 				usb.event = USB_EVENT_RECEIVE_SETUP_DATA;
 			}
